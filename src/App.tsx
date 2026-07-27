@@ -60,7 +60,7 @@ const DashboardContent: React.FC = () => {
       <main className="dashboard-grid">
         
         {/* Left Column: Config and Ingestion */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', overflow: 'hidden' }}>
+        <div className="scrollable-column">
           <AgentConfigPanel />
           <InboxViewer />
         </div>

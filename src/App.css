@@ -1418,6 +1418,24 @@ input:checked + .slider-round:before {
     text-align: center;
   }
 }
-
-
-
+/* Custom scrollable column wrapper for dashboard layout */
+.scrollable-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  height: 100%;
+}
+.scrollable-column::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollable-column::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollable-column::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 2px;
+}
+.scrollable-column::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan-glow);
+}
