@@ -3,6 +3,13 @@ import { useSimulator } from '../context/SimulatorContext';
 import { Settings, CheckCircle } from 'lucide-react';
 import type { ReasoningEffort } from '../types';
 
+const SCENARIO_META: Record<string, { complexity: 'LOW' | 'MED' | 'HIGH'; channels: string[]; tag: string }> = {
+  perfect: { complexity: 'LOW', channels: ['Email', 'ERP'], tag: 'Standard' },
+  bulk: { complexity: 'MED', channels: ['Email', 'ERP', 'Conversion'], tag: 'Unit Conversion' },
+  discontinued: { complexity: 'HIGH', channels: ['Email', 'ERP', 'Teams', 'Exception'], tag: 'SKU Map' },
+  address: { complexity: 'HIGH', channels: ['Email', 'ERP', 'Teams', 'Address'], tag: 'Address Clash' }
+};
+
 const AgentConfigPanel: React.FC = () => {
   const { agentConfig, setAgentConfig, scenarios, activeScenario, runScenario, isProcessing } = useSimulator();
 
@@ -104,6 +111,7 @@ const AgentConfigPanel: React.FC = () => {
         <div className="scenarios-list">
           {scenarios.map((sc) => {
             const isActive = activeScenario?.id === sc.id;
+            const meta = SCENARIO_META[sc.id];
             return (
               <button
                 key={sc.id}
@@ -112,11 +120,21 @@ const AgentConfigPanel: React.FC = () => {
                 disabled={isProcessing}
                 style={{ width: '100%' }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                   <span className="scenario-title">{sc.title}</span>
                   {isActive && <CheckCircle size={14} color="var(--accent-cyan)" />}
                 </div>
-                <p className="scenario-desc">{sc.description}</p>
+                <p className="scenario-desc" style={{ marginBottom: '8px' }}>{sc.description}</p>
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                  <span className="badge badge-outline" style={{ fontSize: '8px', padding: '1px 5px', color: 'var(--text-muted)' }}>
+                    {meta.complexity} Complexity
+                  </span>
+                  {meta.channels.map((ch) => (
+                    <span key={ch} className="badge badge-outline" style={{ fontSize: '8px', padding: '1px 5px', color: 'var(--accent-cyan)', borderColor: 'var(--accent-cyan-glow)' }}>
+                      {ch}
+                    </span>
+                  ))}
+                </div>
               </button>
             );
           })}

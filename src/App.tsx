@@ -19,15 +19,30 @@ const DashboardContent: React.FC = () => {
           <span className="logo-text">Customer Order Manager</span>
           <span className="logo-badge">AGENT SYSTEM</span>
         </div>
-        <div className="header-actions">
-          {activeScenario && (
-            <div className="status-indicator">
-              <span className={`status-dot ${activeOrder?.status || 'draft'}`}></span>
-              <span style={{ color: 'var(--text-secondary)', fontSize: '12px' }}>
-                Status: <strong style={{ color: '#fff' }}>{activeOrder?.status || 'IDLE'}</strong>
+
+        {/* System Operations Metrics */}
+        {activeScenario && (
+          <div className="system-metrics">
+            <div className="metric-item">
+              <span className="metric-label">Latency</span>
+              <span className="metric-value">942ms</span>
+            </div>
+            <div className="metric-item" style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '12px' }}>
+              <span className="metric-label">Token Cost</span>
+              <span className="metric-value">$0.042</span>
+            </div>
+            <div className="metric-item" style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '12px' }}>
+              <span className="metric-label">Status</span>
+              <span className="metric-value" style={{ 
+                color: activeOrder?.status === 'completed' ? 'var(--state-success)' : activeOrder?.status === 'exception' ? 'var(--state-warning)' : 'var(--accent-cyan)'
+              }}>
+                {activeOrder?.status.toUpperCase() || 'IDLE'}
               </span>
             </div>
-          )}
+          </div>
+        )}
+
+        <div className="header-actions">
           <button className="btn btn-secondary" onClick={resetSimulation}>
             <RotateCcw size={14} />
             Reset Sandbox

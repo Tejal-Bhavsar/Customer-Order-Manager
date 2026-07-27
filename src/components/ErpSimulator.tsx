@@ -163,8 +163,18 @@ const ErpSimulator: React.FC = () => {
                         <strong style={{ color: '#fff' }}>{part.salesPartNo}</strong>
                         <div style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{part.description}</div>
                       </td>
-                      <td style={{ color: part.stock < 300 ? 'var(--state-warning)' : 'var(--text-primary)' }}>
-                        {part.stock} PCS
+                      <td style={{ minWidth: '110px' }}>
+                        <div style={{ color: part.stock < 300 ? 'var(--state-warning)' : 'var(--text-primary)', fontWeight: 600 }}>
+                          {part.stock} PCS
+                        </div>
+                        <div style={{ marginTop: '4px', width: '100%', height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', overflow: 'hidden' }}>
+                          <div style={{
+                            width: `${Math.min(100, (part.stock / 10000) * 100)}%`,
+                            height: '100%',
+                            background: part.stock < 300 ? 'var(--state-warning)' : 'var(--state-success)',
+                            boxShadow: part.stock < 300 ? '0 0 4px var(--state-warning-glow)' : '0 0 4px var(--state-success-glow)'
+                          }}></div>
+                        </div>
                       </td>
                       <td>${part.unitPrice.toFixed(2)}</td>
                       <td>

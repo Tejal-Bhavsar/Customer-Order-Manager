@@ -96,52 +96,56 @@ const InboxViewer: React.FC = () => {
                 Live OCR Scanned Document Layout
               </h5>
               
-              <div className="document-canvas-wrapper">
+              <div className="document-canvas-wrapper" style={{ border: '1px solid #e2e8f0' }}>
                 {currentStep === 'OCR_PARSE' && activeScenario?.id === selectedMail.id && (
                   <div className="laser-scanner-line"></div>
                 )}
+                
                 {/* Header elements inside the document */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #334155', paddingBottom: '10px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1.5px solid #0f172a', paddingBottom: '10px', marginBottom: '14px' }}>
                   <div>
-                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#1e293b' }}>PURCHASE ORDER</h3>
-                    <span style={{ fontSize: '10px', color: '#64748b' }}>CONFIRMATION COPY</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '9px', fontWeight: 700, color: '#64748b', marginBottom: '4px', letterSpacing: '0.05em' }}>
+                      <span style={{ color: '#3b82f6' }}>■</span> MOCK INVOICE ORG
+                    </div>
+                    <h3 style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>PURCHASE ORDER</h3>
+                    <span style={{ fontSize: '8px', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.03em' }}>Standard Intake Copy</span>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#1e293b' }}>{selectedMail.attachmentContent.poNumber}</span><br />
-                    <span style={{ fontSize: '9px', color: '#64748b' }}>Date: {new Date().toLocaleDateString()}</span>
+                  <div style={{ textAlign: 'right', fontSize: '10px' }}>
+                    <span style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>{selectedMail.attachmentContent.poNumber}</span><br />
+                    <span style={{ fontSize: '8px', color: '#64748b', display: 'block', marginTop: '2px' }}>Date: {new Date().toLocaleDateString()}</span>
                   </div>
                 </div>
 
                 {/* Info rows */}
-                <div style={{ display: 'flex', gap: '20px', marginBottom: '16px', fontSize: '10px' }}>
+                <div style={{ display: 'flex', gap: '24px', marginBottom: '16px', fontSize: '9px' }}>
                   <div style={{ flex: 1 }}>
-                    <strong style={{ color: '#475569', textTransform: 'uppercase', fontSize: '8px' }}>Customer</strong>
-                    <div style={{ fontWeight: 600, color: '#1e293b', marginTop: '2px' }}>{selectedMail.attachmentContent.customerName}</div>
+                    <strong style={{ color: '#64748b', textTransform: 'uppercase', fontSize: '7.5px', letterSpacing: '0.03em', display: 'block', marginBottom: '3px' }}>Customer Entity</strong>
+                    <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '10px' }}>{selectedMail.attachmentContent.customerName}</div>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <strong style={{ color: '#475569', textTransform: 'uppercase', fontSize: '8px' }}>Deliver To</strong>
-                    <div style={{ color: '#334155', marginTop: '2px', lineHeight: 1.3 }}>{selectedMail.attachmentContent.deliveryAddress}</div>
+                    <strong style={{ color: '#64748b', textTransform: 'uppercase', fontSize: '7.5px', letterSpacing: '0.03em', display: 'block', marginBottom: '3px' }}>Delivery Address</strong>
+                    <div style={{ color: '#334155', lineHeight: 1.3, fontSize: '9px', fontWeight: 500 }}>{selectedMail.attachmentContent.deliveryAddress}</div>
                   </div>
                 </div>
 
                 {/* Items Table */}
-                <div style={{ flex: 1, border: '1px solid #cbd5e1', borderRadius: '4px', overflow: 'hidden' }}>
-                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10px', textAlign: 'left' }}>
+                <div style={{ flex: 1, border: '1px solid #cbd5e1', borderRadius: '4px', overflow: 'hidden', background: '#f8fafc' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9.5px', textAlign: 'left' }}>
                     <thead>
                       <tr style={{ background: '#f1f5f9', borderBottom: '1px solid #cbd5e1' }}>
-                        <th style={{ padding: '6px 10px', fontWeight: 600, color: '#475569' }}>Part Code</th>
-                        <th style={{ padding: '6px 10px', fontWeight: 600, color: '#475569', textAlign: 'center' }}>Qty</th>
-                        <th style={{ padding: '6px 10px', fontWeight: 600, color: '#475569', textAlign: 'center' }}>UoM</th>
-                        <th style={{ padding: '6px 10px', fontWeight: 600, color: '#475569', textAlign: 'right' }}>Unit Price</th>
+                        <th style={{ padding: '6px 8px', fontWeight: 700, color: '#475569', letterSpacing: '0.02em' }}>PART CODE</th>
+                        <th style={{ padding: '6px 8px', fontWeight: 700, color: '#475569', textAlign: 'center', letterSpacing: '0.02em' }}>QTY</th>
+                        <th style={{ padding: '6px 8px', fontWeight: 700, color: '#475569', textAlign: 'center', letterSpacing: '0.02em' }}>UOM</th>
+                        <th style={{ padding: '6px 8px', fontWeight: 700, color: '#475569', textAlign: 'right', letterSpacing: '0.02em' }}>UNIT</th>
                       </tr>
                     </thead>
                     <tbody>
                       {selectedMail.attachmentContent.lines.map((line, idx) => (
-                        <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0' }}>
-                          <td style={{ padding: '8px 10px', fontWeight: 600, color: '#0f172a' }}>{line.partNo}</td>
-                          <td style={{ padding: '8px 10px', color: '#334155', textAlign: 'center' }}>{line.qty}</td>
-                          <td style={{ padding: '8px 10px', color: '#334155', textAlign: 'center' }}>{line.uom}</td>
-                          <td style={{ padding: '8px 10px', color: '#334155', textAlign: 'right', fontWeight: 500 }}>${line.price.toFixed(2)}</td>
+                        <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: '#fff' }}>
+                          <td style={{ padding: '6px 8px', fontWeight: 700, color: '#0f172a' }}>{line.partNo}</td>
+                          <td style={{ padding: '6px 8px', color: '#334155', textAlign: 'center', fontWeight: 600 }}>{line.qty}</td>
+                          <td style={{ padding: '6px 8px', color: '#64748b', textAlign: 'center', fontWeight: 500 }}>{line.uom}</td>
+                          <td style={{ padding: '6px 8px', color: '#334155', textAlign: 'right', fontWeight: 600 }}>${line.price.toFixed(2)}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -163,6 +167,24 @@ const InboxViewer: React.FC = () => {
                           height: `${box.h}%`
                         }}
                       >
+                        <span style={{
+                          position: 'absolute',
+                          top: '-12px',
+                          left: '0',
+                          fontSize: '6.5px',
+                          background: 'var(--accent-blue)',
+                          color: '#fff',
+                          padding: '1px 3px',
+                          borderRadius: '2px',
+                          fontWeight: 700,
+                          letterSpacing: '0.05em',
+                          whiteSpace: 'nowrap',
+                          pointerEvents: 'none',
+                          opacity: isScanning ? 0.3 : 0.85,
+                          transition: 'opacity 0.2s'
+                        }}>
+                          {box.label.toUpperCase()}
+                        </span>
                         <span className="ocr-label-tooltip">
                           {box.label}: <strong>{box.value}</strong>
                         </span>
