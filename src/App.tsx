@@ -1,122 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React from 'react';
+import { SimulatorProvider, useSimulator } from './context/SimulatorContext';
+import { Cpu, RotateCcw } from 'lucide-react';
+import AgentConfigPanel from './components/AgentConfigPanel';
+import InboxViewer from './components/InboxViewer';
+import ExecutionFlow from './components/ExecutionFlow';
+import ErpSimulator from './components/ErpSimulator';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const DashboardContent: React.FC = () => {
+  const { activeScenario, activeOrder, resetSimulation } = useSimulator();
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app-container">
+      {/* Header */}
+      <header className="app-header">
+        <div className="logo-section">
+          <Cpu className="logo-icon" />
+          <span className="logo-text">Customer Order Manager</span>
+          <span className="logo-badge">AGENT SYSTEM</span>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
+        <div className="header-actions">
+          {activeScenario && (
+            <div className="status-indicator">
+              <span className={`status-dot ${activeOrder?.status || 'draft'}`}></span>
+              <span style={{ color: 'var(--text-secondary)', fontSize: '12px' }}>
+                Status: <strong style={{ color: '#fff' }}>{activeOrder?.status || 'IDLE'}</strong>
+              </span>
+            </div>
+          )}
+          <button className="btn btn-secondary" onClick={resetSimulation}>
+            <RotateCcw size={14} />
+            Reset Sandbox
+          </button>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      </header>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      {/* Main Workspace Layout */}
+      <main className="dashboard-grid">
+        
+        {/* Left Column: Config and Ingestion */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', overflow: 'hidden' }}>
+          <AgentConfigPanel />
+          <InboxViewer />
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+
+        {/* Middle Column: Visual Workflow Node Graph & Logs */}
+        <div className="center-layout">
+          <ExecutionFlow />
         </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
+        {/* Right Column: ERP Sandbox Database and Comms */}
+        <div className="glass-panel" style={{ overflow: 'hidden' }}>
+          <ErpSimulator />
+        </div>
 
-export default App
+      </main>
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <SimulatorProvider>
+      <DashboardContent />
+    </SimulatorProvider>
+  );
+};
+
+export default App;

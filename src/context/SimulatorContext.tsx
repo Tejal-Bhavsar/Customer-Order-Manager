@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useRef, ReactNode } from 'react';
-import {
+import React, { createContext, useContext, useState, useRef } from 'react';
+import type { ReactNode } from 'react';
+import type {
   AgentConfig,
   SalesOrder,
   SalesOrderLine,
@@ -10,8 +11,7 @@ import {
   TeamsException,
   CustomerComm,
   SimulationScenario,
-  OrderStatus,
-  BoundingBox
+  LogType
 } from '../types';
 
 interface SimulatorContextType {
