@@ -37,6 +37,38 @@
   --radius-lg: 18px;
 }
 
+/* Light theme overrides */
+.light-theme {
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f3f5;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-focus: rgba(255, 107, 0, 0.5);
+  
+  --text-primary: #12141c;
+  --text-secondary: #4a4d5e;
+  --text-muted: #868e96;
+
+  --accent-cyan: #e65c00;
+  --accent-cyan-glow: rgba(230, 92, 0, 0.12);
+  --accent-blue: #1d4ed8;
+  --accent-blue-glow: rgba(29, 78, 216, 0.12);
+  --accent-indigo: #4f46e5;
+  
+  --state-success: #059669;
+  --state-success-glow: rgba(5, 150, 105, 0.15);
+  --state-warning: #d97706;
+  --state-warning-glow: rgba(217, 119, 6, 0.15);
+  --state-error: #dc2626;
+  --state-error-glow: rgba(220, 38, 38, 0.15);
+}
+
+/* Smooth Transitions for Theme Switcher */
+.app-container, .landing-container, .glass-panel, .landing-nav, .bento-card, .stat-card, .btn, .app-header, .panel-content, .console-panel, .tabs-header, .tab-pane, .teams-widget, .teams-card, .inbox-item, .node-circle, .connection-line {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, stroke 0.3s ease;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

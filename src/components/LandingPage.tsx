@@ -1,13 +1,15 @@
 import React from 'react';
-import { Cpu, ArrowRight, ShieldCheck, Mail, Database, MessageSquare, ExternalLink } from 'lucide-react';
+import { Cpu, ArrowRight, ShieldCheck, Mail, Database, MessageSquare, ExternalLink, Sun, Moon } from 'lucide-react';
 
 interface LandingPageProps {
   onLaunchSandbox: () => void;
+  theme: 'dark' | 'light';
+  onToggleTheme: () => void;
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSandbox }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSandbox, theme, onToggleTheme }) => {
   return (
-    <div className="landing-container">
+    <div className={`landing-container ${theme === 'light' ? 'light-theme' : ''}`}>
       {/* Navigation Header */}
       <nav className="landing-nav">
         <div className="logo-section">
@@ -15,6 +17,25 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSandbox }) => {
           <span className="logo-text">Customer Order Manager</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <button 
+            className="theme-toggle-btn" 
+            onClick={onToggleTheme} 
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--text-secondary)',
+              cursor: 'pointer',
+              padding: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              transition: 'background-color var(--transition-fast)'
+            }}
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
           <a href="https://github.com/Tejal-Bhavsar/Customer-Order-Manager" target="_blank" rel="noreferrer" className="nav-link">
             GitHub <ExternalLink size={12} />
           </a>

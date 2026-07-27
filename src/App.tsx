@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SimulatorProvider, useSimulator } from './context/SimulatorContext';
-import { Cpu, RotateCcw } from 'lucide-react';
+import { Cpu, RotateCcw, Sun, Moon } from 'lucide-react';
 import AgentConfigPanel from './components/AgentConfigPanel';
 import InboxViewer from './components/InboxViewer';
 import ExecutionFlow from './components/ExecutionFlow';
@@ -11,13 +11,18 @@ import './App.css';
 const DashboardContent: React.FC = () => {
   const { activeScenario, activeOrder, resetSimulation } = useSimulator();
   const [view, setView] = useState<'landing' | 'sandbox'>('landing');
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   if (view === 'landing') {
-    return <LandingPage onLaunchSandbox={() => setView('sandbox')} />;
+    return <LandingPage onLaunchSandbox={() => setView('sandbox')} theme={theme} onToggleTheme={toggleTheme} />;
   }
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${theme === 'light' ? 'light-theme' : ''}`}>
       {/* Header */}
       <header className="app-header">
         <div className="logo-section" onClick={() => setView('landing')} style={{ cursor: 'pointer' }} title="Back to Landing Page">
@@ -49,6 +54,25 @@ const DashboardContent: React.FC = () => {
         )}
 
         <div className="header-actions">
+          <button 
+            className="theme-toggle-btn" 
+            onClick={toggleTheme} 
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--text-secondary)',
+              cursor: 'pointer',
+              padding: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              transition: 'background-color var(--transition-fast)'
+            }}
+          >
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
           <button className="btn btn-secondary" onClick={resetSimulation}>
             <RotateCcw size={14} />
             Reset Sandbox
