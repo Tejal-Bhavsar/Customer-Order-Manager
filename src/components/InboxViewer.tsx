@@ -32,14 +32,14 @@ const InboxViewer: React.FC = () => {
   };
 
   return (
-    <div className="glass-panel" style={{ flex: 1, minHeight: 0 }}>
+    <div className="glass-panel" style={{ flex: '1 0 auto', minHeight: '450px' }}>
       <div className="panel-header">
         <div className="panel-title-wrapper">
           <Mail className="panel-icon" />
           <span className="panel-title">Ingestion Inbox & OCR Viewer</span>
         </div>
       </div>
-      <div className="panel-content" style={{ display: 'flex', flexDirection: 'column', gap: '16px', minHeight: 0 }}>
+      <div className="panel-content" style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1, minHeight: 0 }}>
         
         {/* Inbox Mail list */}
         <div className="inbox-list">
