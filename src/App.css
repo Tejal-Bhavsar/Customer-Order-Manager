@@ -14,9 +14,9 @@
   --text-muted: #52566b;
 
   --accent-cyan: #ff6b00;
-  --accent-cyan-glow: rgba(255, 107, 0, 0.25);
+  --accent-cyan-glow: rgba(255, 107, 0, 0.15);
   --accent-blue: #3b82f6;
-  --accent-blue-glow: rgba(59, 130, 246, 0.25);
+  --accent-blue-glow: rgba(59, 130, 246, 0.15);
   --accent-indigo: #60a5fa;
   
   --state-success: #10b981;
@@ -35,6 +35,15 @@
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 18px;
+
+  /* Theme responsive backgrounds */
+  --header-bg: rgba(4, 4, 7, 0.8);
+  --console-bg: #05070c;
+  --console-header-bg: #090d16;
+  --hover-bg: rgba(255, 255, 255, 0.02);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.05);
+  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.08);
+  --graph-bg: rgba(0, 0, 0, 0.2);
 }
 
 /* Light theme overrides */
@@ -51,17 +60,26 @@
   --text-muted: #868e96;
 
   --accent-cyan: #e65c00;
-  --accent-cyan-glow: rgba(230, 92, 0, 0.12);
+  --accent-cyan-glow: rgba(230, 92, 0, 0.1);
   --accent-blue: #1d4ed8;
-  --accent-blue-glow: rgba(29, 78, 216, 0.12);
+  --accent-blue-glow: rgba(29, 78, 216, 0.1);
   --accent-indigo: #4f46e5;
   
   --state-success: #059669;
-  --state-success-glow: rgba(5, 150, 105, 0.15);
+  --state-success-glow: rgba(5, 150, 105, 0.1);
   --state-warning: #d97706;
-  --state-warning-glow: rgba(217, 119, 6, 0.15);
+  --state-warning-glow: rgba(217, 119, 6, 0.1);
   --state-error: #dc2626;
-  --state-error-glow: rgba(220, 38, 38, 0.15);
+  --state-error-glow: rgba(220, 38, 38, 0.1);
+
+  /* Light overrides */
+  --header-bg: rgba(244, 245, 247, 0.85);
+  --console-bg: #ffffff;
+  --console-header-bg: #e5e7eb;
+  --hover-bg: rgba(0, 0, 0, 0.03);
+  --btn-secondary-bg: rgba(0, 0, 0, 0.05);
+  --btn-secondary-hover-bg: rgba(0, 0, 0, 0.08);
+  --graph-bg: rgba(0, 0, 0, 0.02);
 }
 
 /* Smooth Transitions for Theme Switcher */
@@ -113,13 +131,14 @@ h1, h2, h3, h4, h5 {
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  background: radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.15) 0%, rgba(2, 6, 23, 0) 70%);
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle at 50% 0%, var(--accent-blue-glow) 0%, transparent 70%);
 }
 
 .app-header {
   height: 70px;
   border-bottom: 1px solid var(--border-color);
-  background: rgba(2, 6, 23, 0.8);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
@@ -302,13 +321,13 @@ h1, h2, h3, h4, h5 {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--btn-secondary-bg);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--btn-secondary-hover-bg);
 }
 
 .btn-danger {
@@ -825,7 +844,7 @@ input:checked + .slider-round:before {
 
 /* Developer Console Logger styles */
 .console-panel {
-  background: #05070c;
+  background: var(--console-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   font-family: var(--font-mono);
@@ -836,7 +855,7 @@ input:checked + .slider-round:before {
 }
 
 .console-header {
-  background: #090d16;
+  background: var(--console-header-bg);
   border-bottom: 1px solid var(--border-color);
   padding: 10px 16px;
   display: flex;
@@ -886,12 +905,14 @@ input:checked + .slider-round:before {
   flex-grow: 1;
 }
 
-.log-row.info { color: #d1d5db; }
+.log-row.info { color: var(--text-primary); }
 .log-row.warn { color: var(--state-warning); background: rgba(255, 159, 67, 0.05); }
 .log-row.error { color: var(--state-error); background: rgba(239, 68, 68, 0.05); }
-.log-row.tool_call { color: #60a5fa; }
-.log-row.tool_response { color: #34d399; }
-.log-row.reasoning { color: #c084fc; font-style: italic; border-left: 2px solid #a855f7; padding-left: 10px; }
+.log-row.tool_call { color: var(--accent-indigo); }
+.log-row.tool_call span { color: var(--accent-indigo) !important; }
+.log-row.tool_response { color: var(--state-success); }
+.log-row.tool_response span { color: var(--state-success) !important; }
+.log-row.reasoning { color: var(--accent-indigo); font-style: italic; border-left: 2px solid var(--accent-cyan); padding-left: 10px; }
 
 .log-details {
   background: rgba(255, 255, 255, 0.03);
@@ -1171,7 +1192,7 @@ input:checked + .slider-round:before {
   justify-content: space-between;
   padding: 0 40px;
   border-bottom: 1px solid var(--border-color);
-  background: rgba(4, 4, 7, 0.8);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   position: sticky;
   top: 0;
