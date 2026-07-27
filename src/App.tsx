@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SimulatorProvider, useSimulator } from './context/SimulatorContext';
 import { Cpu, RotateCcw } from 'lucide-react';
 import AgentConfigPanel from './components/AgentConfigPanel';
 import InboxViewer from './components/InboxViewer';
 import ExecutionFlow from './components/ExecutionFlow';
 import ErpSimulator from './components/ErpSimulator';
+import LandingPage from './components/LandingPage';
 import './App.css';
 
 const DashboardContent: React.FC = () => {
   const { activeScenario, activeOrder, resetSimulation } = useSimulator();
+  const [view, setView] = useState<'landing' | 'sandbox'>('landing');
+
+  if (view === 'landing') {
+    return <LandingPage onLaunchSandbox={() => setView('sandbox')} />;
+  }
 
   return (
     <div className="app-container">
       {/* Header */}
       <header className="app-header">
-        <div className="logo-section">
+        <div className="logo-section" onClick={() => setView('landing')} style={{ cursor: 'pointer' }} title="Back to Landing Page">
           <Cpu className="logo-icon" />
           <span className="logo-text">Customer Order Manager</span>
           <span className="logo-badge">AGENT SYSTEM</span>
