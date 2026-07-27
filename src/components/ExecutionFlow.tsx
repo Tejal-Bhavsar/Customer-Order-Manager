@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSimulator } from '../context/SimulatorContext';
-import { Terminal, Cpu, ShieldAlert, MessageSquare } from 'lucide-react';
+import {
+  Terminal, Cpu, ShieldAlert, MessageSquare,
+  Mail, FileText, Sliders, UserCheck, CheckSquare,
+  RefreshCw, MapPin, Database, Send
+} from 'lucide-react';
 
 const STEPS_META = [
   { id: 'INGEST', name: 'Ingest Mail' },
@@ -13,6 +17,32 @@ const STEPS_META = [
   { id: 'CREATE_ORDER', name: 'Create ERP' },
   { id: 'NOTIFY', name: 'Notify Client' }
 ];
+
+const getStepIcon = (stepId: string) => {
+  switch (stepId) {
+    case 'INGEST': return <Mail size={15} />;
+    case 'OCR_PARSE': return <FileText size={15} />;
+    case 'GET_DEFAULTS': return <Sliders size={15} />;
+    case 'GET_CUSTOMER': return <UserCheck size={15} />;
+    case 'CHECK_PO': return <CheckSquare size={15} />;
+    case 'RESOLVE_PART': return <RefreshCw size={15} />;
+    case 'MATCH_ADDRESS': return <MapPin size={15} />;
+    case 'CREATE_ORDER': return <Database size={15} />;
+    case 'NOTIFY': return <Send size={15} />;
+    default: return null;
+  }
+};
+
+const getLogBadge = (type: string) => {
+  switch (type) {
+    case 'reasoning': return <span className="console-badge reasoning">THINKING</span>;
+    case 'tool_call': return <span className="console-badge call">CALL</span>;
+    case 'tool_response': return <span className="console-badge return">RETURN</span>;
+    case 'error': return <span className="console-badge fail">FAIL</span>;
+    case 'warn': return <span className="console-badge warning">WARN</span>;
+    default: return <span className="console-badge system">SYSTEM</span>;
+  }
+};
 
 const ExecutionFlow: React.FC = () => {
   const {
@@ -110,8 +140,8 @@ const ExecutionFlow: React.FC = () => {
               const status = getStepStatus(step.id, idx);
               return (
                 <div key={step.id} className="graph-node">
-                  <div className={`node-circle ${status}`}>
-                    {idx + 1}
+                  <div className={`node-circle ${status}`} title={step.name}>
+                    {getStepIcon(step.id)}
                   </div>
                   <span className={`node-label ${status === 'active' || status === 'exception' ? 'active' : status === 'completed' ? 'completed' : ''}`}>
                     {step.name}
@@ -212,7 +242,8 @@ const ExecutionFlow: React.FC = () => {
                     <span className="log-time">[{log.timestamp}]</span>
                     <span className="log-step">&lt;{log.step}&gt;</span>
                     <span className="log-message">
-                      {log.message}
+                      {getLogBadge(log.type)}
+                      <span style={{ marginLeft: '4px' }}>{log.message}</span>
                       {log.details && (
                         <span style={{ marginLeft: '6px', color: 'var(--accent-cyan)', fontSize: '9px' }}>
                           {isExpanded ? '(collapse)' : '(expand detail)'}

@@ -97,6 +97,9 @@ const InboxViewer: React.FC = () => {
               </h5>
               
               <div className="document-canvas-wrapper">
+                {currentStep === 'OCR_PARSE' && activeScenario?.id === selectedMail.id && (
+                  <div className="laser-scanner-line"></div>
+                )}
                 {/* Header elements inside the document */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #334155', paddingBottom: '10px', marginBottom: '16px' }}>
                   <div>
