@@ -171,10 +171,10 @@ h1, h2, h3, h4, h5 {
 .logo-badge {
   font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 500;
-  background: rgba(79, 70, 229, 0.2);
-  border: 1px solid var(--accent-blue);
-  color: #a5b4fc;
+  font-weight: 600;
+  background: var(--accent-cyan-glow);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
   padding: 2px 8px;
   border-radius: 20px;
 }
@@ -641,7 +641,7 @@ input:checked + .slider-round:before {
 /* SVG Node Graph Styles */
 .node-graph-container {
   position: relative;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--graph-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 16px;
@@ -936,7 +936,7 @@ input:checked + .slider-round:before {
 .tabs-header {
   display: flex;
   border-bottom: 1px solid var(--border-color);
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--bg-secondary);
   padding: 0 10px;
 }
 
